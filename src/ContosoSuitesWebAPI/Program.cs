@@ -48,7 +48,7 @@ builder.Services.AddSingleton<CosmosClient>((_) =>
             ManagedIdentityClientId = userAssignedClientId
         });
     CosmosClient client = new(
-        accountEndpoint: builder.Configuration["CosmosDBAccountEndpoint"]!,
+        accountEndpoint: builder.Configuration["CosmosDB:AccountEndpoint"]!,
         tokenCredential: credential
     );
         
@@ -59,9 +59,9 @@ builder.Services.AddSingleton<Kernel>((_) =>
 {
     IKernelBuilder kernelBuilder = Kernel.CreateBuilder();
     kernelBuilder.AddAzureOpenAIChatCompletion(
-        deploymentName: builder.Configuration["AzureOpenAIDeploymentName"]!,
-        endpoint: builder.Configuration["AzureOpenAIEndpoint"]!,
-        apiKey: builder.Configuration["AzureOpenAIApiKey"]!
+        deploymentName: builder.Configuration["AzureOpenAI:DeploymentName"]!,
+        endpoint: builder.Configuration["AzureOpenAI:Endpoint"]!,
+        apiKey: builder.Configuration["AzureOpenAI:ApiKey"]!
     );
     var databaseService = _.GetRequiredService<IDatabaseService>();
     kernelBuilder.Plugins.AddFromObject(databaseService);
@@ -72,8 +72,8 @@ builder.Services.AddSingleton<Kernel>((_) =>
 // Create a single instance of the AzureOpenAIClient to be shared across the application.
 builder.Services.AddSingleton<AzureOpenAIClient>((_) =>
 {
-    var endpoint = new Uri(builder.Configuration["AzureOpenAIEndpoint"]!);
-    var credentials = new AzureKeyCredential(builder.Configuration["AzureOpenAIApiKey"]!);
+    var endpoint = new Uri(builder.Configuration["AzureOpenAI:Endpoint"]!);
+    var credentials = new AzureKeyCredential(builder.Configuration["AzureOpenAI:ApiKey"]!);
 
     var client = new AzureOpenAIClient(endpoint, credentials);
     return client;
