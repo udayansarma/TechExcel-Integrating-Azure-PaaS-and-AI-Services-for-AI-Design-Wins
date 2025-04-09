@@ -67,6 +67,7 @@ def main():
         with st.spinner("Calling Chat endpoint..."):
             if question:
                 response = invoke_chat_endpoint(question)
+                st.write( response)
                 st.write(response.text)
                 st.success("Chat endpoint called successfully.")
             else:

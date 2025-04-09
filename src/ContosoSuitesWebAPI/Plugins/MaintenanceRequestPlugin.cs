@@ -11,6 +11,7 @@ namespace ContosoSuitesWebAPI.Plugins
     public class MaintenanceRequestPlugin(CosmosClient cosmosClient)
     {
         private readonly CosmosClient _cosmosClient = cosmosClient;
+        
 
         // Exercise 5 Task 2 TODO #6: Add KernelFunction and Description descriptors to the function.
         // The function should be named "create_maintenance_request" and it should have a description
